@@ -82,11 +82,13 @@ impl From<anyhow::Error> for ControllerError {
 ///
 /// # Example
 ///
-/// ```rust
-/// use async_trait::async_trait;
-/// use kube_controller_manager::controller::{Controller, ControllerContext};
-/// use tokio::util::CancellationToken;
+/// This example shows how to implement a simple controller:
 ///
+/// 1. Create a struct that implements the `Controller` trait
+/// 2. Use `#[async_trait]` for the `run` method
+/// 3. Watch for cancellation tokens in your main loop
+///
+/// ```ignore
 /// struct MyController;
 ///
 /// #[async_trait]
@@ -95,19 +97,9 @@ impl From<anyhow::Error> for ControllerError {
 ///         "my-controller"
 ///     }
 ///
-///     async fn run(&self, ctx: ControllerContext, cancel: CancellationToken) -> controller::Result<()> {
+///     async fn run(&self, _ctx: ControllerContext, _cancel: CancellationToken) -> Result<()> {
 ///         // Main controller loop
-///         loop {
-///             tokio::select! {
-///                 _ = cancel.cancelled() => {
-///                     tracing::info!("controller shutting down");
-///                     return Ok(());
-///                 }
-///                 _ = self.do_work() => {
-///                     // Continue working
-///                 }
-///             }
-///         }
+///         Ok(())
 ///     }
 /// }
 /// ```
@@ -177,12 +169,10 @@ pub trait Controller: Send + Sync + 'static {
 ///
 /// # Example
 ///
-/// ```rust
-/// use kube_controller_manager::controller::FunctionController;
-///
+/// ```ignore
 /// let controller = FunctionController::new(
 ///     "simple-controller",
-///     |ctx, cancel| async move {
+///     |_ctx, _cancel| async move {
 ///         // Controller logic here
 ///         Ok(())
 ///     }

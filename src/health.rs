@@ -298,7 +298,7 @@ mod tests {
 
         // Add a checker
         let checker = FunctionHealthChecker::new("test", || async { true });
-        registry.register(Arc::new(checker));
+        registry.register(Arc::new(checker)).await;
 
         assert_eq!(registry.len().await, 1);
         assert!(!registry.is_empty().await);
@@ -318,7 +318,7 @@ mod tests {
         let registry = HealthRegistry::new();
 
         let checker = FunctionHealthChecker::new("failing", || async { false });
-        registry.register(Arc::new(checker));
+        registry.register(Arc::new(checker)).await;
 
         let result = registry.check_all().await;
         assert_eq!(result.status, HealthStatus::Unhealthy);

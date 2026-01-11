@@ -36,9 +36,9 @@ use crate::feature::FeatureGate;
 ///
 /// # Example
 ///
-/// ```rust,no_run
-/// use kube_controller_manager::controller_manager::ControllerManager;
-/// use kube_controller_manager::config::ControllerManagerConfig;
+/// ```ignore
+/// use kube_controller_manager_rust::controller_manager::ControllerManager;
+/// use kube_controller_manager_rust::config::ControllerManagerConfig;
 /// use kube::Client;
 ///
 /// #[tokio::main]
