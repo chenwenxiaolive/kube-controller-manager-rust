@@ -1,0 +1,21 @@
+# Rust
+/target/
+**/*.rs.bk
+Cargo.lock
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Claude
+.claude/
+
+# Build
+dist/
+build/
+
+# Kubernetes (upstream - not part of this project)
+/kubernetes/
